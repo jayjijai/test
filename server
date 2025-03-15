@@ -1,0 +1,22 @@
+const path = require("path");
+const express = require("express");
+const app = express();
+
+// Serve static files from "public" folder
+app.use(express.static("public"));
+
+// Download route
+app.get("/download", (req, res) => {
+  const filePath = path.join(__dirname, "public", "encrypter.exe");
+  res.download(filePath, "encrypter.exe", (err) => {
+    if (err) {
+      console.error("Error downloading file:", err);
+      res.status(500).send("Error downloading file.");
+    }
+  });
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000");
+});
